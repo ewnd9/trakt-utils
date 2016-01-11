@@ -1,6 +1,6 @@
 {
   "name": "trakt-utils",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "set of opionated utils for trakt.tv api",
   "main": "dist/index.js",
   "scripts": {
