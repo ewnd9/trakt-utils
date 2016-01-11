@@ -1,0 +1,38 @@
+{
+  "name": "trakt-utils",
+  "version": "0.1.0",
+  "description": "set of opionated utils for trakt.tv api",
+  "main": "dist/index.js",
+  "scripts": {
+    "start": "node cli.js",
+    "test": "ava",
+    "test:watch": "nodemon test/*.js --exec ava",
+    "prebuild": "rm -rf dist && mkdir dist",
+    "build": "babel -d dist/ src/",
+    "prepublish": "npm run build"
+  },
+  "preferGlobal": "false",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ewnd9/trakt-utils.git"
+  },
+  "keywords": [
+    "trakt",
+    "tv",
+    "tv-shows",
+    "movies"
+  ],
+  "author": "ewnd9 <ewndnine@gmail.com>",
+  "dependencies": {
+    "bluebird": "^3.1.1",
+    "got": "^6.0.0",
+    "lodash": "^3.10.1",
+    "moment": "^2.11.1"
+  },
+  "devDependencies": {
+    "ava": "^0.8.0",
+    "babel": "^5.8.21",
+    "nock": "^5.2.1",
+    "nodemon": "^1.8.1"
+  }
+}
