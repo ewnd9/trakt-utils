@@ -46,6 +46,6 @@ export function generateReport(eps, now) {
     processDiff(i, diff);
   }
 
-  processDiff(futureEpisodes.length - 1);
+  processDiff(futureEpisodes.length);
   return result;
 };
