@@ -139,11 +139,14 @@ Trakt.prototype.getReport = function(interval) {
         (a, b) => a.report.aired[a.report.aired.length - 1].date - b.report.aired[b.report.aired.length - 1].date
       );
 
+      result[HAS_1_AIRED] = result[HAS_1_AIRED] || [];
       result[HAS_1_AIRED].sort(sortAired);
+      result[MORE_THAN_1_AIRED] = result[MORE_THAN_1_AIRED] || [];
       result[MORE_THAN_1_AIRED].sort(sortAired);
+      result[HAS_FUTURE] = result[HAS_FUTURE] || [];
       result[HAS_FUTURE].sort((a, b) => a.report.future[0].episodes[0].date - b.report.future[0].episodes[0].date);
 
-      return result[HAS_1_AIRED].concat(result[HAS_FUTURE]).concat(result[MORE_THAN_1_AIRED]);
+      return [result[HAS_1_AIRED], result[HAS_FUTURE], result[MORE_THAN_1_AIRED]];
     });
 };
 
