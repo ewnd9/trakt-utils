@@ -64,6 +64,10 @@ Trakt.prototype.getHistory = function(show) {
 	return this.request(`/sync/history/shows/${show}`);
 };
 
+Trakt.prototype.getWatched = function(type) {
+	return this.request(`/sync/watched/${type}`);
+};
+
 Trakt.prototype.getTimeline = function(interval) {
   let episodes;
 

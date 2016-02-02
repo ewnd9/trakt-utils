@@ -75,6 +75,13 @@ test('#addToHistory', async t => {
   t.is(1, data.added.movies);
 });
 
+test('#getWatched', async t => {
+  const movies = await trakt.getWatched('movies');
+  t.ok(movies);
+  const shows = await trakt.getWatched('shows');
+  t.ok(shows);
+});
+
 // test('#getAccessToken', async t => {
 //   const token = await trakt.getAccessToken('');
 //   t.ok('string', token);

@@ -15,20 +15,22 @@ import Trakt from 'trakt-utils';
 const trakt = new Trakt('<id>', '<secret>', '<optional-token>');
 ```
 
-### List Of Methods
+### Api
 
-- `getAccessToken(pin)`
-
-> Where can I get pin?
-
-Open `https://trakt.tv/oauth/applications`, open your application,
-open a link from `PIN URL` section
+- `getAccessToken(pin)` - To get a pin you need to open `https://trakt.tv/oauth/applications`, open your application,
+open a link from `PIN URL` section, copy the pin.
 
 - `getTimeline(interval)`
+
 - `getReport(interval)`
+
 - `startScrobble(media, progress)`
+
 - `pauseScrobble(media, progress)`
+
 - `addToHistory(media)`
+
+- `getWatched(type)` - `type` can be either `shows` or `movies`
 
 Every method returns promise
 
