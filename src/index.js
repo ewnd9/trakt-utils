@@ -77,6 +77,7 @@ Trakt.prototype.getTimeline = function(interval) {
       const shows = {};
 
       episodes = body.filter(ep => ep.episode.season > 0).map(ep => {
+        ep.date = new Date(ep.first_aired);
         shows[ep.show.ids.trakt] = true;
         return ep;
       });
@@ -110,10 +111,39 @@ Trakt.prototype.getReport = function(interval) {
       const shows = _.groupBy(episodes, ep => ep.show.title);
       const now = moment();
 
-      return _.reduce(shows, (total, eps, showTitle) => {
+      const report = _.reduce(shows, (total, eps, showTitle) => {
         total[showTitle] = generateReport(eps, now);
         return total;
   		}, {});
+
+      const reportArray = _.map(report, (report, show) => ({ show, report }));
+
+      const HAS_1_AIRED = 'HAS_1_AIRED';
+      const MORE_THAN_1_AIRED = 'MORE_THAN_1_AIRED';
+      const HAS_FUTURE = 'HAS_FUTURE';
+      const NO_EPISODES = 'NO_EPISODES';
+
+      const result = _.groupBy(reportArray, ({ report }) => {
+        if (report.aired.length === 1) {
+          return HAS_1_AIRED;
+        } else if (report.aired.length > 1) {
+          return MORE_THAN_1_AIRED;
+        } if (report.future.length > 0) {
+          return HAS_FUTURE;
+        } else {
+          return NO_EPISODES;
+        }
+      });
+
+      const sortAired = (
+        (a, b) => a.report.aired[a.report.aired.length - 1].date - b.report.aired[b.report.aired.length - 1].date
+      );
+
+      result[HAS_1_AIRED].sort(sortAired);
+      result[MORE_THAN_1_AIRED].sort(sortAired);
+      result[HAS_FUTURE].sort((a, b) => a.report.future[0].episodes[0].date - b.report.future[0].episodes[0].date);
+
+      return result[HAS_1_AIRED].concat(result[HAS_FUTURE]).concat(result[MORE_THAN_1_AIRED]);
     });
 };
 
