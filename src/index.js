@@ -56,7 +56,7 @@ Trakt.prototype.request = function(url, options = {}) {
 };
 
 Trakt.prototype.getCalendar = function(interval) {
-	const startDate = moment().add(interval * -1, 'day').format('YYYY-MM-DD');
+	const startDate = moment().add(-10, 'day').format('YYYY-MM-DD');
 	return this.request(`/calendars/my/shows/${startDate}/${interval * 2}`);
 };
 
