@@ -56,16 +56,16 @@ Trakt.prototype.request = function(url, options = {}) {
 };
 
 Trakt.prototype.getCalendar = function(interval) {
-	const startDate = moment().add(-10, 'day').format('YYYY-MM-DD');
-	return this.request(`/calendars/my/shows/${startDate}/${interval * 2}`);
+  const startDate = moment().add(-10, 'day').format('YYYY-MM-DD');
+  return this.request(`/calendars/my/shows/${startDate}/${interval * 2}`);
 };
 
 Trakt.prototype.getHistory = function(show) {
-	return this.request(`/sync/history/shows/${show}`);
+  return this.request(`/sync/history/shows/${show}`);
 };
 
 Trakt.prototype.getWatched = function(type) {
-	return this.request(`/sync/watched/${type}`);
+  return this.request(`/sync/watched/${type}`);
 };
 
 Trakt.prototype.getTimeline = function(interval) {
@@ -114,7 +114,7 @@ Trakt.prototype.getReport = function(interval) {
       const report = _.reduce(shows, (total, eps, showTitle) => {
         total[showTitle] = generateReport(eps, now);
         return total;
-  		}, {});
+      }, {});
 
       const reportArray = _.map(report, (report, show) => ({ show, report }));
 
