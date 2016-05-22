@@ -1,5 +1,6 @@
 import test from 'ava';
 import 'babel-core/register';
+
 import moment from 'moment';
 import Trakt from './../src/index';
 import * as utils from './../src/utils';
@@ -10,13 +11,18 @@ const token = process.env.TRAKT_TOKEN;
 
 const trakt = new Trakt(id, secret, token);
 
+const civilWarMovieId = 'tt3498820';
+
+const flashShowId = 'tt3107288';
+const arrowShowId = 'tt2193021';
+
 test('#getTimeline', async t => {
   const data = await trakt.getTimeline();
-  t.ok(data.length);
+  t.truthy(data.length);
 
-  t.ok(data[0].first_aired);
-  t.ok(data[0].episode);
-  t.ok(data[0].show);
+  t.truthy(data[0].first_aired);
+  t.truthy(data[0].episode);
+  t.truthy(data[0].show);
 });
 
 test('#generateReport', async t => {
@@ -47,42 +53,63 @@ test('#generateReport', async t => {
   t.is(21, report.future[2].gap);
   t.is(2, report.future[2].episodes.length);
 
-  t.ok(data);
+  t.truthy(data);
 });
 
 test('#getReport', async t => {
   const data = await trakt.getReport();
-  t.ok(data);
+  t.truthy(data);
 });
 
 test('#search', async t => {
   const data = await trakt.search('arrow', 'show');
-  t.is('tt2193021', data[0].show.ids.imdb);
+  t.is(arrowShowId, data[0].show.ids.imdb);
 });
 
-test('#startScrobble', async t => {
-  const data = await trakt.startScrobble({ type: 'movie', imdb: 'tt1291570' }, 1);
+test.serial('#startScrobble', async t => {
+  const data = await trakt.startScrobble({ type: 'movie', imdb: civilWarMovieId }, 1);
   t.is('start', data.action);
 });
 
-test('#pauseScrobble', async t => {
-  const data = await trakt.pauseScrobble({ type: 'movie', imdb: 'tt1291570' }, 1);
+test.serial('#pauseScrobble', async t => {
+  const data = await trakt.pauseScrobble({ type: 'movie', imdb: civilWarMovieId }, 1);
   t.is('pause', data.action);
 });
 
 test('#addToHistory', async t => {
-  const data = await trakt.addToHistory({ type: 'movie', imdb: 'tt1291570' });
+  const data = await trakt.addToHistory({ type: 'movie', imdb: civilWarMovieId });
   t.is(1, data.added.movies);
 });
 
 test('#getWatched', async t => {
   const movies = await trakt.getWatched('movies');
-  t.ok(movies);
+  t.truthy(movies);
   const shows = await trakt.getWatched('shows');
-  t.ok(shows);
+  t.truthy(shows);
+});
+
+test('#getMovie', async t => {
+  const movie = await trakt.getMovie(civilWarMovieId, 'images');
+  t.truthy(movie.images.poster.thumb);
+});
+
+test('#getShow', async t => {
+  const show = await trakt.getShow(flashShowId, 'images');
+  t.truthy(show.images.poster.thumb);
+});
+
+test('#getShowSeasons', async t => {
+  const seasons = await trakt.getShowSeasons(flashShowId, 'images');
+  t.truthy(seasons[0].number === 1);
+  t.truthy(seasons[0].images.poster.thumb);
+});
+
+test('#getShowSeason', async t => {
+  const season = await trakt.getShowSeason(flashShowId, 2, 'images');
+  t.truthy(season[0].images.screenshot.thumb);
 });
 
 // test('#getAccessToken', async t => {
 //   const token = await trakt.getAccessToken('');
-//   t.ok('string', token);
+//   t.truthy('string', token);
 // });

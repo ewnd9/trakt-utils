@@ -150,6 +150,7 @@ Trakt.prototype.getReport = function(interval) {
     });
 };
 
+// http://docs.trakt.apiary.io/#reference/scrobble/start/start-watching-in-a-media-center
 Trakt.prototype.startScrobble = function(media, progress) {
   return this.request('/scrobble/start', {
     method: 'POST',
@@ -157,6 +158,7 @@ Trakt.prototype.startScrobble = function(media, progress) {
   });
 };
 
+// http://docs.trakt.apiary.io/#reference/scrobble/pause/pause-watching-in-a-media-center
 Trakt.prototype.pauseScrobble = function(media, progress) {
   return this.request('/scrobble/pause', {
     method: 'POST',
@@ -164,6 +166,7 @@ Trakt.prototype.pauseScrobble = function(media, progress) {
   });
 };
 
+// http://docs.trakt.apiary.io/#reference/sync/add-to-history/add-items-to-watched-history
 Trakt.prototype.addToHistory = function(media) {
   return this.request('/sync/history', {
     method: 'POST',
@@ -171,8 +174,45 @@ Trakt.prototype.addToHistory = function(media) {
   });
 };
 
+// http://docs.trakt.apiary.io/#reference/movies/summary
+Trakt.prototype.getMovie = function(id, extended) {
+  return this.request(`/movies/${id}`, {
+    query: {
+      extended
+    }
+  });
+};
+
+// http://docs.trakt.apiary.io/#reference/shows/summary
+Trakt.prototype.getShow = function(id, extended) {
+  return this.request(`/shows/${id}`, {
+    query: {
+      extended
+    }
+  });
+};
+
+// http://docs.trakt.apiary.io/#reference/seasons/summary/get-all-seasons-for-a-show
+Trakt.prototype.getShowSeasons = function(id, extended) {
+  return this.request(`/shows/${id}/seasons`, {
+    query: {
+      extended
+    }
+  });
+};
+
+// http://docs.trakt.apiary.io/#reference/seasons/season/get-single-season-for-a-show
+Trakt.prototype.getShowSeason = function(id, season, extended) {
+  return this.request(`/shows/${id}/seasons/${season}`, {
+    query: {
+      extended
+    }
+  });
+};
+
+// http://docs.trakt.apiary.io/#reference/search/text-query/get-text-query-results
 Trakt.prototype.search = function(query, type) {
   return this.request('/search', { query: { query, type } });
 };
 
-export default Trakt;
+module.exports = Trakt;

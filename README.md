@@ -1,6 +1,6 @@
 # trakt-utils
 
-Set of opionated utils for [trakt.tv api](docs.trakt.apiary.io)
+Opinionated utils for [trakt.tv api](docs.trakt.apiary.io)
 
 ## Install
 
@@ -32,7 +32,15 @@ open a link from `PIN URL` section, copy the pin.
 
 - `getWatched(type)` - `type` can be either `shows` or `movies`
 
-Every method returns promise
+- `getMovie(id)`
+
+- `getShow(id)`
+
+- `getShowSeasons(id)`
+
+- `getShowSeason(id, season)`
+
+Every method returns a promise
 
 ## License
 
