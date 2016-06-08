@@ -109,6 +109,19 @@ test('#getShowSeason', async t => {
   t.truthy(season[0].images.screenshot.thumb);
 });
 
+test.only('#getCompleteShows', async t => {
+  const hashFunction = () => null;
+  const onUpdate = () => '';
+  const getCache = () => Promise.reject(null);
+  const setCache = () => Promise.resolve();
+
+  const result = await trakt.getCompleteShows(hashFunction, getCache, setCache, onUpdate);
+  
+  t.deepEqual(Object.keys(result[0]), [ 'title', 'year', 'ids', 'status', 'seasons', 'episodes' ]);
+  t.deepEqual(Object.keys(result[0].seasons[0]), [ 'number', 'episodesCount', 'firstAired', 'airedEpisodes' ]);
+  t.deepEqual(Object.keys(result[0].episodes[0]), [ 'season', 'number', 'title', 'ids', 'aired', 'watched', 'watchedDate' ]);
+});
+
 // test('#getAccessToken', async t => {
 //   const token = await trakt.getAccessToken('');
 //   t.truthy('string', token);

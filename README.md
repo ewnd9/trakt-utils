@@ -40,6 +40,8 @@ open a link from `PIN URL` section, copy the pin.
 
 - `getShowSeason(id, season)`
 
+- `getCompleteShows(hashFunction, getCache, setCache, onUpdate)`
+
 Every method returns a promise
 
 ## License

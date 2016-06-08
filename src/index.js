@@ -215,4 +215,6 @@ Trakt.prototype.search = function(query, type) {
   return this.request('/search', { query: { query, type } });
 };
 
+Trakt.prototype.getCompleteShows = require('./shows/fetch-shows').default;
+
 module.exports = Trakt;
